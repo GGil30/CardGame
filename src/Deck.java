@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class Deck {
     // Instance variables
@@ -39,6 +40,19 @@ public class Deck {
         }
         return cards.get(--cardsLeft);
 
+    }
+
+    // shuffle function
+    public void shuffle()
+    {
+        int j;
+        for(int i = cards.size() - 1; i> -1; i--)
+        {
+            j = (int)(Math.random() * i);
+            Card swap = cards.get(i);
+            cards.set(i, cards.get(j));
+            cards.set(j, swap);
+        }
     }
 
 }
