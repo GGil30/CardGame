@@ -13,7 +13,14 @@ public class Deck {
         {
             for(int j = 0; j< suits.length; j++)
             {
-                cards.add(new Card(ranks[i], suits[j], values[i]));
+                if(suits[j].equals("diamonds") ||suits[j].equals("hearts"))
+                {
+                    cards.add(new Card(ranks[i], suits[j], values[i], "red"));
+                }
+                else
+                {
+                    cards.add(new Card(ranks[i], suits[j], values[i], "black"));
+                }
             }
         }
         this.cardsLeft = cards.size();

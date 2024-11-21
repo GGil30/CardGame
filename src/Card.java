@@ -4,12 +4,14 @@ public class Card {
     private char rank;
     private String suit;
     private int value;
+    private String color;
 
     // Constructor
-    public Card(char rank, String suit, int value) {
+    public Card(char rank, String suit, int value, String color) {
         this.rank = rank;
         this.suit = suit;
         this.value = value;
+        this.color = color;
     }
 
     // Getters and Setters
@@ -35,6 +37,14 @@ public class Card {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String toString()
