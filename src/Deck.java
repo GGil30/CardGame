@@ -7,8 +7,9 @@ public class Deck {
     private int cardsLeft;
 
     // Constructor
-    public Deck(char[] ranks, String[] suits, int[] values)
+    public Deck(String[] ranks, String[] suits, int[] values)
     {
+        cards = new ArrayList<Card>();
         for(int i = 0; i< ranks.length; i++)
         {
             for(int j = 0; j< suits.length; j++)

@@ -1,13 +1,13 @@
 // Gabriel Gil, 11/18/24
 public class Card {
     // Instance variables
-    private char rank;
+    private String rank;
     private String suit;
     private int value;
     private String color;
 
     // Constructor
-    public Card(char rank, String suit, int value, String color) {
+    public Card(String rank, String suit, int value, String color) {
         this.rank = rank;
         this.suit = suit;
         this.value = value;
@@ -15,11 +15,11 @@ public class Card {
     }
 
     // Getters and Setters
-    public char getRank() {
+    public String getRank() {
         return rank;
     }
 
-    public void setRank(char rank) {
+    public void setRank(String rank) {
         this.rank = rank;
     }
 
