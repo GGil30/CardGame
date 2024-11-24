@@ -5,7 +5,7 @@ public class Game {
    // Instance Variables
     Player player;
     Deck deck;
-    ArrayList<ArrayList<Card>> board;
+    Board board;
 
     // Constructor
     public Game()
@@ -18,14 +18,9 @@ public class Game {
         String name = input.nextLine();
         player = new Player(name);
         deck = new Deck(ranks, suits, values);
-        board = new ArrayList<ArrayList<Card>>();
-        for(int i = 0; i<7; i++)
-        {
-            for(int j = 0; j<i+1; j++)
-            {
-                board.get(i).add(deck.deal());
-            }
-        }
+        board = new Board(deck);
+        board.printBoard();
+
     }
 
     // Play game method
