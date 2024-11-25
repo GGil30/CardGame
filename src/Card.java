@@ -5,6 +5,7 @@ public class Card {
     private String suit;
     private int value;
     private String color;
+    private boolean isHidden;
 
     // Constructor
     public Card(String rank, String suit, int value, String color) {
@@ -12,6 +13,7 @@ public class Card {
         this.suit = suit;
         this.value = value;
         this.color = color;
+        isHidden = true;
     }
 
     // Getters and Setters
@@ -47,8 +49,21 @@ public class Card {
         this.color = color;
     }
 
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
+    }
+
     public String toString()
     {
-        return this.rank + " of " + this.suit;
+        if(!isHidden)
+        {
+            return this.rank + " of " + this.suit + " - " + this.color;
+        }
+        return "----";
+
     }
 }
