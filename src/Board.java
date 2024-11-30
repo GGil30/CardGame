@@ -64,7 +64,7 @@ public class Board {
             System.out.print((i+1) + "                       ");
         }
         System.out.println();
-        for(int i = 0; i < 7; i++)
+        for(int i = 0; i < 20; i++)
         {
             for(int j = 0; j < 7; j++)
             {
@@ -77,11 +77,13 @@ public class Board {
                     System.out.print(mainBoard.get(j).get(i) + spaceAdd(mainBoard.get(j).get(i).toString()));
 
                 }
-                else {
+                else if(i<mainBoard.get(6).size()) {
                     System.out.print("                        ");
                 }
             }
-            System.out.println();
+            if(i<mainBoard.get(6).size() + 1) {
+                System.out.println();
+            }
         }
         extraCards.get(0).setHidden(false);
         System.out.println("Wild card: " + extraCards.get(0));
@@ -117,21 +119,19 @@ public class Board {
         boolean isWildCard = true;
         for(ArrayList<Card> row : mainBoard)
         {
-                if(toMove.equals(row.get(row.size()-1).toString()))
-                {
-                    if(isValidMove(row.get(row.size()-1), categoryWhere, where))
-                    {
-                        cardToMove = row.remove(row.indexOf(row.get(row.size()-1)));
+            if(!row.isEmpty()) {
+                if (toMove.equals(row.get(row.size() - 1).toString())) {
+                    if (isValidMove(row.get(row.size() - 1), categoryWhere, where)) {
+                        cardToMove = row.remove(row.indexOf(row.get(row.size() - 1)));
                         isValidMove = true;
                         isWildCard = false;
-                    }
-                    else
-                    {
+                    } else {
                         return false;
                     }
+                }
             }
         }
-        if(isWildCard && isValidMove(extraCards.remove(0), categoryWhere, where))
+        if(isWildCard && isValidMove(extraCards.get(0), categoryWhere, where))
         {
             cardToMove = extraCards.remove(0);
         }
