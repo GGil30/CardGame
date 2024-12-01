@@ -61,6 +61,7 @@ public class Game {
                 }
                 else {
                     System.out.println("That is not a valid move, try again.");
+                    break;
                 }
             }
         }

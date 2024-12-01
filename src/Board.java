@@ -59,9 +59,14 @@ public class Board {
 
     public void printBoard()
     {
+        int largest = 0;
         for(int i = 0; i <7; i++)
         {
             System.out.print((i+1) + "                       ");
+            if(mainBoard.get(i).size() > mainBoard.get(largest).size())
+            {
+                largest = i;
+            }
         }
         System.out.println();
         for(int i = 0; i < 20; i++)
@@ -77,16 +82,19 @@ public class Board {
                     System.out.print(mainBoard.get(j).get(i) + spaceAdd(mainBoard.get(j).get(i).toString()));
 
                 }
-                else if(i<mainBoard.get(6).size()) {
+                else if(i<mainBoard.get(largest).size()) {
                     System.out.print("                        ");
                 }
             }
-            if(i<mainBoard.get(6).size() + 1) {
+            if(i<mainBoard.get(largest).size() + 1) {
                 System.out.println();
             }
         }
         extraCards.get(0).setHidden(false);
-        System.out.println("Wild card: " + extraCards.get(0));
+        if(!extraCards.isEmpty())
+        {
+            System.out.println("Wild card: " + extraCards.get(0));
+        }
         System.out.println("Final Columns:");
         System.out.print("(1)Hearts: " + finalCardPrint(0) + "(2)Clubs: " + finalCardPrint(1) +  "(3)Diamonds: " + finalCardPrint(2) +  "(4)Spades: " + finalCardPrint(3));
         System.out.println();
@@ -110,30 +118,41 @@ public class Board {
         }
         cardCols.get(i).get(cardCols.get(i).size() - 1).setHidden(false);
         return cardCols.get(i).get(cardCols.get(i).size() - 1).toString() + spaceAdd(cardCols.get(i).get(cardCols.get(i).size() - 1).toString());
+
     }
 
     public boolean doMove(String toMove, String categoryWhere, int where)
     {
         boolean isValidMove = false;
-        Card cardToMove = null;
+        ArrayList<Card> cardsToMove = new ArrayList<Card>();
         boolean isWildCard = true;
         for(ArrayList<Card> row : mainBoard)
         {
             if(!row.isEmpty()) {
-                if (toMove.equals(row.get(row.size() - 1).toString())) {
-                    if (isValidMove(row.get(row.size() - 1), categoryWhere, where)) {
-                        cardToMove = row.remove(row.indexOf(row.get(row.size() - 1)));
-                        isValidMove = true;
-                        isWildCard = false;
-                    } else {
-                        return false;
+                for(Card card : row)
+                {
+                    if(toMove.equals(card.toString()))
+                    {
+                        if (isValidMove(card, categoryWhere, where)) {
+                            int test = row.indexOf(card);
+                            int testing = row.size() - 1;
+                            for (int i = testing; i > test - 1; i--)
+                            {
+                                cardsToMove.addFirst(row.remove(i));
+                            }
+                            isValidMove = true;
+                            isWildCard = false;
+                            break;
+                        } else {
+                            return false;
+                        }
                     }
                 }
             }
         }
         if(isWildCard && isValidMove(extraCards.get(0), categoryWhere, where))
         {
-            cardToMove = extraCards.remove(0);
+            cardsToMove.add(extraCards.remove(0));
         }
         else if(!isValidMove)
         {
@@ -142,11 +161,11 @@ public class Board {
 
         if(categoryWhere.equals("f"))
         {
-            cardCols.get(where -1).add(cardToMove);
+            cardCols.get(where -1).addAll(cardsToMove);
         }
         else
         {
-            mainBoard.get(where -1).add(cardToMove);
+            mainBoard.get(where -1).addAll(cardsToMove);
         }
         return true;
     }
@@ -175,18 +194,22 @@ public boolean isValidMove(Card card, String categoryWhere, int where)
     }
     else
     {
-        if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() < card.getValue())
+        if (!mainBoard.get(where - 1).isEmpty())
         {
-            return false;
+            if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() < card.getValue())
+            {
+                return false;
+            }
+            if(!(card.getValue() == mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() - 1))
+            {
+                return false;
+            }
+            if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getColor().equals(card.getColor()))
+            {
+                return false;
+            }
         }
-        if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getColor().equals(card.getColor()))
-        {
-            return false;
-        }
-        if((mainBoard.get(where-1).size() == 0) && (card.getValue() != 13))
-        {
-            return false;
-        }
+        else return card.getValue() == 13;
     }
 return true;
 }
