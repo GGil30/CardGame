@@ -90,9 +90,9 @@ public class Board {
                 System.out.println();
             }
         }
-        extraCards.get(0).setHidden(false);
         if(!extraCards.isEmpty())
         {
+            extraCards.get(0).setHidden(false);
             System.out.println("Wild card: " + extraCards.get(0));
         }
         System.out.println("Final Columns:");
