@@ -150,9 +150,12 @@ public class Board {
                 }
             }
         }
-        if(isWildCard && isValidMove(extraCards.get(0), categoryWhere, where))
+        if (!extraCards.isEmpty())
         {
-            cardsToMove.add(extraCards.remove(0));
+            if(isWildCard && isValidMove(extraCards.get(0), categoryWhere, where))
+            {
+                cardsToMove.add(extraCards.remove(0));
+            }
         }
         else if(!isValidMove)
         {
