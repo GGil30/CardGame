@@ -1,3 +1,6 @@
+// Gabriel Gil, 12/4/24 DO WE NEED SETTERS FOR THIS?????
+
+// Import the necessary classes
 import java.util.ArrayList;
 
 public class Player {
@@ -12,6 +15,8 @@ public class Player {
         this.name = name;
         points = 0;
     }
+
+    // This constructor does not apply to my game
     public Player(String name, ArrayList<Card> handIn)
     {
         this.name = name;

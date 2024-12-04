@@ -1,9 +1,13 @@
-// Gabriel Gil, 11/18/24
+// Gabriel Gil, 12/4/24
+
+// Import the necessary classes
 public class Card {
     // Instance variables
     private String rank;
     private String suit;
     private int value;
+    // Need a color instance variable for solitaire, and created an isHidden to determine whether the cards show
+    // or not
     private String color;
     private boolean isHidden;
 
@@ -13,6 +17,7 @@ public class Card {
         this.suit = suit;
         this.value = value;
         this.color = color;
+        // All cards start out as hidden, and will become not hidden as the game progresses
         isHidden = true;
     }
 
@@ -57,9 +62,11 @@ public class Card {
         isHidden = hidden;
     }
 
+    // The toString method adjusts with whether the card is hidden or not. If hidden, the card appears as a few
+    // dashes. If not hidden, the card's toString behaves as normal
     public String toString()
     {
-        if(!isHidden)
+          if(!isHidden)
         {
             return this.rank + " of " + this.suit + " - " + this.color;
         }
