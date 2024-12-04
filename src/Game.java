@@ -27,9 +27,9 @@ public class Game {
         board = new Board(deck);
         // Print out the instructions for the game
         System.out.println("Welcome to Solitaire! If you aren't familiar with the game, the goal is to put all the" +
-                " cards in order by suit in the final columns. In this version, you will be shown the board before " +
+                " cards in order by suit in the final columns. In this version, you will be shown \nthe board before " +
                 "each move with the choice of getting the next wild card or playing a move. The game will end " +
-                "automatically once you have won, but if you find yourself without any moves, then you've " +
+                "automatically once you have won, but if you find yourself \nwithout any moves, then you've " +
                 "unfortunately lost and will need to restart the game yourself. Good luck, " + player.getName() +"!");
     }
 
@@ -67,7 +67,7 @@ public class Game {
                     " board.");
             String toMove = input.nextLine();
             System.out.println("Do you want to put it in a board column or final column? For board column, " +
-                    "type 'b'. For a final column, type 'f'");
+                    "type any key. For a final column, type 'f'");
             String categoryWhere = input.nextLine();
             System.out.println("Where do you want to put it? Type the number of the column. If it's a final " +
                     "column, type the number associated with the column");

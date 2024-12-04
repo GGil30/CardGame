@@ -149,47 +149,19 @@ public class Board {
 
     }
 
+    // doMove function that will call the find card and isValidMove functions to find the card and check if the move
+    // is valid. This function will return true or false, letting the game class know whether the move was done or
+    // not.
     public boolean doMove(String toMove, String categoryWhere, int where)
     {
-        boolean isValidMove = false;
-        ArrayList<Card> cardsToMove = new ArrayList<Card>();
-        boolean isWildCard = true;
-        for(ArrayList<Card> row : mainBoard)
-        {
-            if(!row.isEmpty()) {
-                for(Card card : row)
-                {
-                    if(toMove.equals(card.toString()))
-                    {
-                        if (isValidMove(card, categoryWhere, where)) {
-                            int test = row.indexOf(card);
-                            int testing = row.size() - 1;
-                            for (int i = testing; i > test - 1; i--)
-                            {
-                                cardsToMove.addFirst(row.remove(i));
-                            }
-                            isValidMove = true;
-                            isWildCard = false;
-                            break;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        if (!extraCards.isEmpty())
-        {
-            if(isWildCard && isValidMove(extraCards.get(0), categoryWhere, where))
-            {
-                cardsToMove.add(extraCards.remove(0));
-            }
-        }
-        else if(!isValidMove)
+        // Call the find card function, and if there are no cards to move, then the move cannot be done
+        ArrayList<Card> cardsToMove = findCard(toMove, categoryWhere, where);
+        if(cardsToMove.isEmpty())
         {
             return false;
         }
 
+        // Move the cards that the user wants to move to the proper location
         if(categoryWhere.equals("f"))
         {
             cardCols.get(where -1).addAll(cardsToMove);
@@ -198,14 +170,62 @@ public class Board {
         {
             mainBoard.get(where -1).addAll(cardsToMove);
         }
+
+        // Return true that the move was done
         return true;
     }
+
+    // Find card function to find the card or card stack that the user wants to move. If the move is not valid, return
+    // that there are no cards to move
+    public ArrayList<Card> findCard(String toMove, String categoryWhere, int where)
+    {
+        ArrayList<Card> cardsToMove = new ArrayList<Card>();
+
+        // Iterate through each card in the main board
+        for(ArrayList<Card> row : mainBoard)
+        {
+            if(!row.isEmpty()) {
+                for(Card card : row)
+                {
+
+                    // If the card is found, check if it is a valid move
+                    if(toMove.equals(card.toString()))
+                    {
+                        if (isValidMove(card, categoryWhere, where)) {
+
+                            // If the move is valid,
+                            int minIndex = row.indexOf(card);
+                            int maxIndex = row.size() - 1;
+                            for (int i = maxIndex; i > minIndex - 1; i--)
+                            {
+                                cardsToMove.addFirst(row.remove(i));
+                            }
+                            return cardsToMove;
+                        }
+                        else {
+                            return cardsToMove;
+                        }
+                    }
+                }
+            }
+        }
+        if (!extraCards.isEmpty())
+        {
+            if(isValidMove(extraCards.get(0), categoryWhere, where))
+            {
+                cardsToMove.add(extraCards.remove(0));
+            }
+        }
+        return cardsToMove;
+    }
+
 
 public boolean isValidMove(Card card, String categoryWhere, int where)
 {
     if(categoryWhere.equals("f"))
     {
-
+        if((where - 1 > -1) && (where - 1 < 4))
+        {
             if(!cardCols.get(where-1).isEmpty())
             {
                 if (cardCols.get(where - 1).get(cardCols.get(where - 1).size() - 1).getValue() > card.getValue()) {
@@ -222,25 +242,38 @@ public boolean isValidMove(Card card, String categoryWhere, int where)
                     return false;
                 }
             }
+        }
+        else {
+            return false;
+        }
+
     }
     else
     {
-        if (!mainBoard.get(where - 1).isEmpty())
+        if((where - 1 > -1) && (where - 1 < 7 ))
         {
-            if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() < card.getValue())
+            if (!mainBoard.get(where - 1).isEmpty())
             {
-                return false;
+                if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() < card.getValue())
+                {
+                    return false;
+                }
+                if(!(card.getValue() == mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() - 1))
+                {
+                    return false;
+                }
+                if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getColor().equals(card.getColor()))
+                {
+                    return false;
+                }
             }
-            if(!(card.getValue() == mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getValue() - 1))
-            {
-                return false;
-            }
-            if(mainBoard.get(where-1).get(mainBoard.get(where-1).size()-1).getColor().equals(card.getColor()))
-            {
-                return false;
-            }
+            else return card.getValue() == 13;
         }
-        else return card.getValue() == 13;
+        else
+        {
+            return false;
+        }
+
     }
 return true;
 }
