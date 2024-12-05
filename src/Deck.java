@@ -10,21 +10,16 @@ public class Deck {
     private int cardsLeft;
 
     // Constructor
-    public Deck(String[] ranks, String[] suits, int[] values)
-    {
+    public Deck(String[] ranks, String[] suits, int[] values) {
         // Initialize the cards ArrayList
         cards = new ArrayList<Card>();
         // Iterate through all the ranks of cards and create new cards for each rank with proper suits and colors
-        for(int i = 0; i< ranks.length; i++)
-        {
-            for(int j = 0; j< suits.length; j++)
-            {
-                if(suits[j].equals("diamonds") ||suits[j].equals("hearts"))
-                {
+        for(int i = 0; i< ranks.length; i++) {
+            for(int j = 0; j< suits.length; j++) {
+                if(suits[j].equals("diamonds") ||suits[j].equals("hearts")) {
                     cards.add(new Card(ranks[i], suits[j], values[i], "red"));
                 }
-                else
-                {
+                else {
                     cards.add(new Card(ranks[i], suits[j], values[i], "black"));
                 }
             }
@@ -34,8 +29,7 @@ public class Deck {
     }
 
     // isEmpty function
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return this.cardsLeft == 0;
     }
 
@@ -45,31 +39,26 @@ public class Deck {
     }
 
     // Deal function
-    public Card deal()
-    {
+    public Card deal() {
         // If cards remain in the deck, return a card and decrease cardsLeft accordingly
         if (isEmpty())
         {
             return null;
         }
         return cards.get(--cardsLeft);
-
     }
 
-    // shuffle function
-    public void shuffle()
-    {
+    // Shuffle function
+    public void shuffle() {
         int j;
         Card swap;
         // Shuffle the deck by swapping iterating backwards through the deck and swapping the card at that index with
         // a random card in the deck
-        for(int i = cards.size() - 1; i > -1; i--)
-        {
+        for(int i = cards.size() - 1; i > -1; i--) {
             j = (int)(Math.random() * i);
             swap = cards.get(i);
             cards.set(i, cards.get(j));
             cards.set(j, swap);
         }
     }
-
 }

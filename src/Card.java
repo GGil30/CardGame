@@ -64,13 +64,10 @@ public class Card {
 
     // The toString method adjusts with whether the card is hidden or not. If hidden, the card appears as a few
     // dashes. If not hidden, the card's toString behaves as normal
-    public String toString()
-    {
-          if(!isHidden)
-        {
+    public String toString() {
+        if(!isHidden) {
             return this.rank + " of " + this.suit + " - " + this.color;
         }
         return "----";
-
     }
 }
