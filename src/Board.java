@@ -192,7 +192,7 @@ public class Board {
         else {
             if ((where - 1 > -1) && (where - 1 < 7)) {
                 if (!mainBoard.get(where - 1).isEmpty()) {
-                    if (mainBoard.get(where - 1).get(mainBoard.get(where - 1).size() - 1).getValue() <= card.getValue()) {
+                    if (!(mainBoard.get(where - 1).get(mainBoard.get(where - 1).size() - 1).getValue() == (card.getValue() + 1))) {
                         return false;
                     }
                     if (mainBoard.get(where - 1).get(mainBoard.get(where - 1).size() - 1).getColor().equals(card.getColor())) {
