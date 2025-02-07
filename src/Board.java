@@ -109,9 +109,9 @@ public class Board {
     // doMove function that will call the find card and isValidMove functions to find the card and check if the move
     // is valid. This function will return true or false, letting the game class know whether the move was done or
     // not.
-    public boolean doMove(String toMove, String categoryWhere, int where) {
+    public boolean doMove(int row, int col, String categoryWhere, int where) {
         // Call the find card function, and if there are no cards to move, then the move cannot be done
-        ArrayList<Card> cardsToMove = findCard(toMove, categoryWhere, where);
+        ArrayList<Card> cardsToMove = findCard(row, col, categoryWhere, where);
         if (cardsToMove.isEmpty()) {
             return false;
         }
@@ -127,7 +127,7 @@ public class Board {
 
     // Find card function to find the card or card stack that the user wants to move. If the move is not valid, return
     // that there are no cards to move
-    public ArrayList<Card> findCard(String toMove, String categoryWhere, int where) {
+    public ArrayList<Card> findCard(int col, int row, int where) {
         ArrayList<Card> cardsToMove = new ArrayList<Card>();
         // Iterate through each card in the main board
         for (ArrayList<Card> row : mainBoard) {

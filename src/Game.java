@@ -10,11 +10,14 @@ public class Game {
     Board board;
     // Declare a scanner instance variable to get the name of the player
     Scanner input;
+    private GameView window;
+
 
     // Constructor
     public Game() {
         // Initialize all instance variables, calling necessary constructors and getting necessary input from the
         // user
+        window = new GameView(this);
         input = new Scanner(System.in);
         String[] suits = {"hearts", "diamonds", "clubs", "spades"};
         String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K"};
