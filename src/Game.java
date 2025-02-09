@@ -58,9 +58,18 @@ public class Game {
     {
         // If the user chose to move a card, ask for the specifics for the move, and do the move if it is valid
         if (str.equals("m")) {
-            System.out.println("What card to you want to move? Type in the card exactly how it is seen on the" +
-                    " board.");
-            String toMove = input.nextLine();
+            System.out.println("Are you moving the extra card? (y or n)");
+            String isExtraCard = input.nextLine();
+            int colMove = 0;
+            int rowMove = 0;
+            if(!isExtraCard.equals("y")) {
+                System.out.println("Column of card you want to move:");
+                colMove = input.nextInt() - 1;
+                input.nextLine();
+                System.out.println("Row of card you want to move:");
+                rowMove = input.nextInt() - 1;
+                input.nextLine();
+            }
             System.out.println("Do you want to put it in a board column or final column? For board column, " +
                     "type any key. For a final column, type 'f'");
             String categoryWhere = input.nextLine();
@@ -70,7 +79,7 @@ public class Game {
             input.nextLine();
             // Call the do move function, which passes in parameters which include the details of the move
             // If the move is not valid, inform the user with a message
-            if(!board.doMove(toMove, categoryWhere, where)) {
+            if(!board.doMove(isExtraCard, colMove,rowMove, categoryWhere, where)) {
                 System.out.println("That is not a valid move, try again.");
             }
         }

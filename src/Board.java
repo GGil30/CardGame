@@ -109,9 +109,9 @@ public class Board {
     // doMove function that will call the find card and isValidMove functions to find the card and check if the move
     // is valid. This function will return true or false, letting the game class know whether the move was done or
     // not.
-    public boolean doMove(int row, int col, String categoryWhere, int where) {
+    public boolean doMove(String isExtraCard, int col, int row, String categoryWhere, int where) {
         // Call the find card function, and if there are no cards to move, then the move cannot be done
-        ArrayList<Card> cardsToMove = findCard(row, col, categoryWhere, where);
+        ArrayList<Card> cardsToMove = findCard(isExtraCard, col, row, categoryWhere, where);
         if (cardsToMove.isEmpty()) {
             return false;
         }
@@ -127,34 +127,23 @@ public class Board {
 
     // Find card function to find the card or card stack that the user wants to move. If the move is not valid, return
     // that there are no cards to move
-    public ArrayList<Card> findCard(int col, int row, int where) {
+    public ArrayList<Card> findCard(String isExtraCard, int col, int row, String categoryWhere, int where) {
         ArrayList<Card> cardsToMove = new ArrayList<Card>();
-        // Iterate through each card in the main board
-        for (ArrayList<Card> row : mainBoard) {
-            if (!row.isEmpty()) {
-                for (Card card : row) {
-                    // If the card is found, check if it is a valid move
-                    if (toMove.equals(card.toString())) {
-                        if (isValidMove(card, categoryWhere, where)) {
-                            // If the move is valid, get all the cards in the stack up until the card to move
-                            int minIndex = row.indexOf(card);
-                            int maxIndex = row.size() - 1;
-                            for (int i = maxIndex; i > minIndex - 1; i--) {
-                                cardsToMove.addFirst(row.remove(i));
-                            }
-                            return cardsToMove;
-                        }
-                        else {
-                            return cardsToMove;
-                        }
-                    }
+        if(isExtraCard.equals("y")){
+            if (!extraCards.isEmpty()) {
+                if (isValidMove(extraCards.get(0), categoryWhere, where)) {
+                    cardsToMove.add(extraCards.remove(0));
                 }
             }
         }
-        // If the card wasn't in the main board, get the card from the extra cards column assuming there is one
-        if (!extraCards.isEmpty()) {
-            if (isValidMove(extraCards.get(0), categoryWhere, where)) {
-                cardsToMove.add(extraCards.remove(0));
+        else{
+            Card toMove = mainBoard.get(col).get(row);
+            if(isValidMove(toMove, categoryWhere, where)){
+                int minIndex = mainBoard.get(col).indexOf(toMove);
+                int maxIndex = mainBoard.get(col).size() - 1;
+                for (int i = maxIndex; i > minIndex - 1; i--) {
+                    cardsToMove.addFirst(mainBoard.get(col).remove(i));
+                }
             }
         }
         return cardsToMove;
