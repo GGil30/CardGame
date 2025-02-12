@@ -11,6 +11,7 @@ public class Game {
     // Declare a scanner instance variable to get the name of the player
     Scanner input;
     private GameView window;
+    private int state;
 
 
     // Constructor
@@ -19,6 +20,7 @@ public class Game {
         // user
         window = new GameView(this);
         input = new Scanner(System.in);
+        state = -1;
         String[] suits = {"hearts", "diamonds", "clubs", "spades"};
         String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K"};
         int[] values = {1, 2, 3, 4, 5 ,6, 7, 8, 9, 10, 11, 12, 13};
@@ -29,6 +31,12 @@ public class Game {
         board = new Board(deck);
         // Print out the instructions for the game
         printInstructions();
+        state = 0;
+        window.repaint();
+        System.out.println("Press any key to continue");
+        name = input.nextLine();
+        state = 1;
+        window.repaint();
     }
 
     // Play game method
@@ -102,5 +110,11 @@ public class Game {
     public static void main(String[] args) {
         Game game = new Game();
         game.playGame();
+    }
+
+    // Get state method
+
+    public int getState() {
+        return state;
     }
 }

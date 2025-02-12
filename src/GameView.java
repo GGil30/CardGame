@@ -36,7 +36,9 @@ public class GameView extends JFrame {
     public void paint(Graphics g){
         g.drawRect(0,0, WINDOW_WIDTH, WINDOW_HEIGHT);
         paintBackground(g);
-        paintInstructions(g);
+        if(game.getState() == 0){
+            paintInstructions(g);
+        }
 
     }
 
@@ -61,6 +63,7 @@ public class GameView extends JFrame {
         g.drawString("each move with the choice of getting the next wild card or playing a move. The game will end automatically once you have won, but if you find yourself without any moves, then you've ", 100, 320);
         String s = "unfortunately lost and will need to restart the game yourself. Good luck, " + game.player.getName() + "!";
         g.drawString(s, 100, 340);
+        g.drawString("Press any key to continue.", 100, 360);
 
     }
 }
