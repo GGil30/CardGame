@@ -21,13 +21,13 @@ public class Game {
         window = new GameView(this);
         input = new Scanner(System.in);
         state = -1;
-        String[] suits = {"hearts", "diamonds", "clubs", "spades"};
+        String[] suits = {"spades", "hearts", "diamonds", "clubs"};
         String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K"};
         int[] values = {1, 2, 3, 4, 5 ,6, 7, 8, 9, 10, 11, 12, 13};
         System.out.println("What is your name?");
         String name = input.nextLine();
         player = new Player(name);
-        deck = new Deck(ranks, suits, values);
+        deck = new Deck(ranks, suits, values, window);
         board = new Board(deck);
         // Print out the instructions for the game
         printInstructions();
@@ -53,6 +53,7 @@ public class Game {
             // Call the play move function and check whether the game has been won after that move
             playMove(str);
             board.printBoard();
+            window.repaint();
             if(board.checkWin()) {
                 break;
             }
@@ -116,5 +117,9 @@ public class Game {
 
     public int getState() {
         return state;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

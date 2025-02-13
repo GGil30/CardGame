@@ -1,5 +1,7 @@
 // Gabriel Gil, 12/4/24
 
+import java.awt.*;
+
 // Import the necessary classes
 public class Card {
     // Instance variables
@@ -10,13 +12,20 @@ public class Card {
     // or not
     private String color;
     private boolean isHidden;
+    private Image cardImage;
+    private GameView window;
+    public static final int CARDWIDTH = 100;
+    public static final int CARDHEIGHT = 140;
+
 
     // Constructor
-    public Card(String rank, String suit, int value, String color) {
+    public Card(String rank, String suit, int value, String color, Image cardImage, GameView window) {
         this.rank = rank;
         this.suit = suit;
         this.value = value;
         this.color = color;
+        this.cardImage = cardImage;
+        this.window = window;
         // All cards start out as hidden, and will become not hidden as the game progresses
         isHidden = true;
     }
@@ -69,5 +78,22 @@ public class Card {
             return this.rank + " of " + this.suit + " - " + this.color;
         }
         return "----";
+    }
+
+    public void draw(Graphics g, int x, int y){
+        if(this.isHidden){
+            g.drawImage(window.getBackImage(), x, y, CARDWIDTH, CARDHEIGHT, window);
+        }
+        else {
+            g.drawImage(cardImage, x, y, CARDWIDTH, CARDHEIGHT, window);
+        }
+    }
+
+    public Image getCardImage() {
+        return cardImage;
+    }
+
+    public GameView getWindow() {
+        return window;
     }
 }

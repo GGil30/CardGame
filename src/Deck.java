@@ -1,6 +1,7 @@
 // Gabriel Gil, 12/4/24
 
 // Import the necessary classes
+import javax.swing.*;
 import java.util.ArrayList;
 import java.lang.Math;
 
@@ -10,18 +11,22 @@ public class Deck {
     private int cardsLeft;
 
     // Constructor
-    public Deck(String[] ranks, String[] suits, int[] values) {
+    public Deck(String[] ranks, String[] suits, int[] values, GameView w) {
         // Initialize the cards ArrayList
         cards = new ArrayList<Card>();
+        GameView window = w;
         // Iterate through all the ranks of cards and create new cards for each rank with proper suits and colors
-        for(int i = 0; i< ranks.length; i++) {
-            for(int j = 0; j< suits.length; j++) {
-                if(suits[j].equals("diamonds") ||suits[j].equals("hearts")) {
-                    cards.add(new Card(ranks[i], suits[j], values[i], "red"));
+        int counter = 1;
+        for(int j = 0; j< ranks.length; j++) {
+            for(int i = 0; i< suits.length; i++) {
+                String s = "Resources/" + counter + ".png";
+                if(suits[i].equals("diamonds") ||suits[i].equals("hearts")) {
+                    cards.add(new Card(ranks[j], suits[i], values[j], "red", new ImageIcon(s).getImage(), window));
                 }
                 else {
-                    cards.add(new Card(ranks[i], suits[j], values[i], "black"));
+                    cards.add(new Card(ranks[j], suits[i], values[j], "black", new ImageIcon(s).getImage(), window));
                 }
+                counter++;
             }
         }
         this.cardsLeft = cards.size();

@@ -216,5 +216,17 @@ public class Board {
     public void shiftWildCard() {
         extraCards.add(extraCards.remove(0));
     }
+
+    public ArrayList<ArrayList<Card>> getMainBoard() {
+        return mainBoard;
+    }
+
+    public ArrayList<ArrayList<Card>> getCardCols() {
+        return cardCols;
+    }
+
+    public ArrayList<Card> getExtraCards() {
+        return extraCards;
+    }
 }
 

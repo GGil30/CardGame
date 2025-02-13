@@ -21,7 +21,7 @@ public class Player {
         points = 0;
         hand = new ArrayList<Card>();
         for (Card card : handIn) {
-            hand.add(new Card(card.getRank(), card.getSuit(), card.getValue(), card.getColor()));
+            hand.add(new Card(card.getRank(), card.getSuit(), card.getValue(), card.getColor(), card.getCardImage(), card.getWindow()));
         }
     }
 
@@ -45,7 +45,7 @@ public class Player {
 
     // Add card method
     public void addCard(Card c) {
-        hand.add(new Card(c.getRank(), c.getSuit(), c.getValue(), c.getColor()));
+        hand.add(new Card(c.getRank(), c.getSuit(), c.getValue(), c.getColor(), c.getCardImage(), c.getWindow()));
     }
 
     // To string method
