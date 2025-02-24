@@ -44,11 +44,28 @@ public class GameView extends JFrame {
         if(game.getState() == 1){
             paintSetup(g);
         }
+        if(game.getState() == 2){
+            paintEndScreen(g);
+        }
 
     }
 
     public void paintBackground(Graphics g){
         g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
+    }
+
+    public void paintInstructions(Graphics g){
+        g.setColor(Color.white);
+        g.setFont(new Font("serif", Font.PLAIN, 15));
+        g.drawString("Welcome to Solitaire! If you aren't familiar with the game, the goal is to put all the cards in order by suit in the final columns. In this version, you will be shown the board before ", 100, 100);
+        g.drawString("each move with the choice of getting the next wild card or playing a move. The game will end automatically once you have won, but if you find yourself without any moves, then you've ", 100, 120);
+        String s = "unfortunately lost and will need to restart the game yourself. Good luck, " + game.player.getName() + "!";
+        g.drawString(s, 100, 140);
+        g.drawString("Press any key to continue.", 100, 160);
+
+    }
+    public void paintSetup(Graphics g){
+        // Draw final cols
         g.setColor(Color.black);
         for(int i = 0; i < 4; i++){
             if(i<2){
@@ -64,19 +81,8 @@ public class GameView extends JFrame {
         g.drawImage(club, 1050, 60, 100, 140, this);
         g.drawImage(diamond, 1175, 60, 100, 140, this);
         g.drawImage(spade, 1300, 60, 100, 140, this);
-    }
 
-    public void paintInstructions(Graphics g){
-        g.setColor(Color.white);
-        g.setFont(new Font("serif", Font.PLAIN, 15));
-        g.drawString("Welcome to Solitaire! If you aren't familiar with the game, the goal is to put all the cards in order by suit in the final columns. In this version, you will be shown the board before ", 100, 300);
-        g.drawString("each move with the choice of getting the next wild card or playing a move. The game will end automatically once you have won, but if you find yourself without any moves, then you've ", 100, 320);
-        String s = "unfortunately lost and will need to restart the game yourself. Good luck, " + game.player.getName() + "!";
-        g.drawString(s, 100, 340);
-        g.drawString("Press any key to continue.", 100, 360);
-
-    }
-    public void paintSetup(Graphics g){
+        // Draw columns
         g.setColor(Color.white);
         g.setFont(new Font("serif", Font.BOLD, 20));
         for(int i = 0; i < 7; i++){
@@ -103,9 +109,15 @@ public class GameView extends JFrame {
             }
 
         }
-
-
     }
+
+    public void paintEndScreen(Graphics g) {
+        g.setColor(Color.white);
+        g.setFont(new Font("serif", Font.PLAIN, 30));
+        String s = "Congratulations " + game.player.getName() + ", you won!";
+        g.drawString(s, 100, 100);
+    }
+
 
     public Image getBackImage() {
         return backImage;

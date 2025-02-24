@@ -44,6 +44,7 @@ public class Game {
     {
         // Print the board out first for the user
         board.printBoard();
+
         // Repeat the process of playing the user's moves or adjusting the board for their choices until they have won
         while(true) {
             // Ask the user whether they want to move or get the next wild card
@@ -55,6 +56,7 @@ public class Game {
             board.printBoard();
             window.repaint();
             if(board.checkWin()) {
+                state = 2;
                 break;
             }
         }
