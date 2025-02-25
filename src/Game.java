@@ -24,6 +24,7 @@ public class Game {
         String[] suits = {"spades", "hearts", "diamonds", "clubs"};
         String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K"};
         int[] values = {1, 2, 3, 4, 5 ,6, 7, 8, 9, 10, 11, 12, 13};
+        window.repaint();
         System.out.println("What is your name?");
         String name = input.nextLine();
         player = new Player(name);

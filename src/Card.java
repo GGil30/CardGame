@@ -74,17 +74,16 @@ public class Card {
     // The toString method adjusts with whether the card is hidden or not. If hidden, the card appears as a few
     // dashes. If not hidden, the card's toString behaves as normal
     public String toString() {
-        if(!isHidden) {
+        if (!isHidden) {
             return this.rank + " of " + this.suit + " - " + this.color;
         }
         return "----";
     }
 
-    public void draw(Graphics g, int x, int y){
-        if(this.isHidden){
+    public void draw(Graphics g, int x, int y) {
+        if (this.isHidden) {
             g.drawImage(window.getBackImage(), x, y, CARDWIDTH, CARDHEIGHT, window);
-        }
-        else {
+        } else {
             g.drawImage(cardImage, x, y, CARDWIDTH, CARDHEIGHT, window);
         }
     }

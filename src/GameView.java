@@ -12,11 +12,16 @@ public class GameView extends JFrame {
     private Image club;
     private Image circle;
     private Image backImage;
+    private final int XSTART = 100;
+    private final int YSTART = 100;
+    private final int CARDMARGIN = 125;
+    private final int FINALCOLXSTART = 925;
+    private final int FINALCOLY = 60;
 
     Game game;
 
     // constructor
-    public GameView(Game game){
+    public GameView(Game game) {
         this.game = game;
         this.background = new ImageIcon("Resources/background.jpg").getImage();
         this.heart = new ImageIcon("Resources/heart.png").getImage();
@@ -27,7 +32,6 @@ public class GameView extends JFrame {
         this.backImage = new ImageIcon("Resources/back.png").getImage();
 
 
-
         // Setup the window.
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Solitaire");
@@ -35,77 +39,87 @@ public class GameView extends JFrame {
         this.setVisible(true);
     }
 
-    public void paint(Graphics g){
-        g.drawRect(0,0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    public void paint(Graphics g) {
+        g.drawRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         paintBackground(g);
-        if(game.getState() == 0){
+        if(game.getState() == -1){
+            g.setColor(Color.white);
+            g.setFont(new Font("serif", Font.PLAIN, 30));
+            g.drawString("Please enter your name.", XSTART, YSTART);
+        }
+        if (game.getState() == 0) {
             paintInstructions(g);
         }
-        if(game.getState() == 1){
+        if (game.getState() == 1) {
             paintSetup(g);
         }
-        if(game.getState() == 2){
+        if (game.getState() == 2) {
             paintEndScreen(g);
         }
 
     }
 
-    public void paintBackground(Graphics g){
+    public void paintBackground(Graphics g) {
         g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
     }
 
-    public void paintInstructions(Graphics g){
+    public void paintInstructions(Graphics g) {
         g.setColor(Color.white);
         g.setFont(new Font("serif", Font.PLAIN, 15));
-        g.drawString("Welcome to Solitaire! If you aren't familiar with the game, the goal is to put all the cards in order by suit in the final columns. In this version, you will be shown the board before ", 100, 100);
-        g.drawString("each move with the choice of getting the next wild card or playing a move. The game will end automatically once you have won, but if you find yourself without any moves, then you've ", 100, 120);
+        g.drawString("Welcome to Solitaire! If you aren't familiar with the game, the goal is to put all the " +
+                "cards in order by suit in the final columns. In this version, you will be shown the board " +
+                "before ", XSTART, YSTART);
+        g.drawString("each move with the choice of getting the next wild card or playing a move. The game will " +
+                "end automatically once you have won, but if you find yourself without any moves, then " +
+                "you've ", XSTART, YSTART+20);
         String s = "unfortunately lost and will need to restart the game yourself. Good luck, " + game.player.getName() + "!";
-        g.drawString(s, 100, 140);
-        g.drawString("Press any key to continue.", 100, 160);
+        g.drawString(s, XSTART, YSTART+40);
+        g.drawString("Press any key to continue.", XSTART, YSTART+60);
 
     }
-    public void paintSetup(Graphics g){
-        // Draw final cols
+
+    public void paintSetup(Graphics g) {
+        // Draw final cols and extra card cols
         g.setColor(Color.black);
-        for(int i = 0; i < 4; i++){
-            if(i<2){
-                g.drawRect(25 + i*125, 60, 100, 140);
+        for (int i = 0; i < 4; i++) {
+            if (i < 2) {
+                g.drawRect(25 + i * CARDMARGIN, FINALCOLY, Card.CARDWIDTH, Card.CARDHEIGHT);
             }
-            g.drawRect(WINDOW_WIDTH - 125 - i*125, 60, 100, 140);
+            g.drawRect(WINDOW_WIDTH - CARDMARGIN - i * CARDMARGIN, FINALCOLY, Card.CARDWIDTH, Card.CARDHEIGHT);
             g.setColor(Color.white);
             g.setFont(new Font("serif", Font.BOLD, 20));
-            g.drawString(Integer.toString(4-i), WINDOW_WIDTH - 80 - i*125, 50);
+            g.drawString(Integer.toString(4 - i), WINDOW_WIDTH - 80 - i * CARDMARGIN, 50);
             g.setColor(Color.black);
         }
-        g.drawImage(heart, 925, 60, 100, 140, this);
-        g.drawImage(club, 1050, 60, 100, 140, this);
-        g.drawImage(diamond, 1175, 60, 100, 140, this);
-        g.drawImage(spade, 1300, 60, 100, 140, this);
+        g.drawImage(heart, FINALCOLXSTART, FINALCOLY, Card.CARDWIDTH, Card.CARDHEIGHT, this);
+        g.drawImage(club, FINALCOLXSTART + CARDMARGIN, FINALCOLY, Card.CARDWIDTH, Card.CARDHEIGHT, this);
+        g.drawImage(diamond, FINALCOLXSTART + CARDMARGIN*2, FINALCOLY, Card.CARDWIDTH, Card.CARDHEIGHT, this);
+        g.drawImage(spade, FINALCOLXSTART + CARDMARGIN*3, FINALCOLY, Card.CARDWIDTH, Card.CARDHEIGHT, this);
 
         // Draw columns
         g.setColor(Color.white);
         g.setFont(new Font("serif", Font.BOLD, 20));
-        for(int i = 0; i < 7; i++){
-            g.drawString(Integer.toString(i + 1), 200 + i*150, 250);
+        for (int i = 0; i < 7; i++) {
+            g.drawString(Integer.toString(i + 1), 200 + i * 150, 250);
 
             //Draw Main board
 
-            int x = 155 + i*150;
-            for(int j = 0; j< game.getBoard().getMainBoard().get(i).size(); j++){
-                int y = 260 + j*30;
+            int x = 155 + i * 150;
+            for (int j = 0; j < game.getBoard().getMainBoard().get(i).size(); j++) {
+                int y = 260 + j * 30;
                 game.getBoard().getMainBoard().get(i).get(j).draw(g, x, y);
             }
         }
 
         // Draw extra cards
-        game.getBoard().getExtraCards().get(1).draw(g,25 , 60);
-        game.getBoard().getExtraCards().get(0).draw(g, 25 + 125 , 60);
+        game.getBoard().getExtraCards().get(1).draw(g, 25, 60);
+        game.getBoard().getExtraCards().get(0).draw(g, 25 + 125, 60);
 
         // Draw final cards
-        for(int i = 0; i < 4; i++){
-            if(game.getBoard().getCardCols().get(3-i).size() > 0){
-                int cardToGet = game.getBoard().getCardCols().get(3-i).size() - 1;
-                game.getBoard().getCardCols().get(3-i).get(cardToGet).draw(g, WINDOW_WIDTH - 125 - i*125, 60);
+        for (int i = 0; i < 4; i++) {
+            if (game.getBoard().getCardCols().get(3 - i).size() > 0) {
+                int cardToGet = game.getBoard().getCardCols().get(3 - i).size() - 1;
+                game.getBoard().getCardCols().get(3 - i).get(cardToGet).draw(g, WINDOW_WIDTH - 125 - i * 125, 60);
             }
 
         }
