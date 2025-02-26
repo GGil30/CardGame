@@ -41,7 +41,7 @@ public class Game {
         state = 0;
         window.repaint();
         System.out.println("Press any key to continue");
-        name = input.nextLine(); //<--QUESTION FOR MS. NAMASIVAYAM HERE DO NOT IGNORE!!!!!!!!!!!!!!
+        input.nextLine(); //<--QUESTION FOR MS. NAMASIVAYAM HERE DO NOT IGNORE!!!!!!!!!!!!!!
         // Set the state to 1, indicating that we are in the active game state and repaint to show the appropiate game
         // setup
         state = 1;

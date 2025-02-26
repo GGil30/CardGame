@@ -2,15 +2,15 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GameView extends JFrame {
-    // Instance Variables
-    public static final int WINDOW_WIDTH = 1425;
-    public static final int WINDOW_HEIGHT = 1000;
+    // Declare Image variables for necessary images in the background
     private Image background;
     private Image heart;
     private Image spade;
     private Image diamond;
     private Image club;
     private Image backImage;
+    // Set the constants of numbers and fonts that are repeatedly used in the spacing and design of the game
+    // to eliminate magic numbers and repetition of font declaration
     private final int X_START = 100;
     private final int Y_START = 100;
     private final int CARD_MARGIN = 125;
@@ -26,14 +26,18 @@ public class GameView extends JFrame {
     private final Font BIG_FONT = new Font("serif", Font.PLAIN, 30);
     private final Font SMALLER_FONT = new Font("serif", Font.BOLD, 20);
     private final Font SMALLEST_FONT = new Font("serif", Font.PLAIN, 15);
+    public static final int WINDOW_WIDTH = 1425;
+    public static final int WINDOW_HEIGHT = 1000;
 
 
-
+    // Declare game instance variable to be able to store a backend
     Game game;
 
-    // constructor
+    // GameView constructor
     public GameView(Game game) {
+        // Store the backend in the game instance variable
         this.game = game;
+        // Initialize the necessary images
         this.background = new ImageIcon("Resources/background.jpg").getImage();
         this.heart = new ImageIcon("Resources/heart.png").getImage();
         this.spade = new ImageIcon("Resources/spade.png").getImage();
@@ -42,33 +46,37 @@ public class GameView extends JFrame {
         this.backImage = new ImageIcon("Resources/back.png").getImage();
 
 
-        // Setup the window.
+        // Setup the window with the proper title, default close operation, its size, and setVisible to true
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Solitaire");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setVisible(true);
     }
 
+    // Paint method which shows all the frontend graphics and does different things depending on the state
     public void paint(Graphics g) {
+        // Draw the window and call the paint background method
         g.drawRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         paintBackground(g);
+        //
         if(game.getState() == -1){
             g.setColor(Color.white);
             g.setFont(BIG_FONT);
             g.drawString("Please enter your name.", X_START, Y_START);
         }
-        if (game.getState() == 0) {
+        else if (game.getState() == 0) {
             paintInstructions(g);
         }
-        if (game.getState() == 1) {
+        else if (game.getState() == 1) {
             paintSetup(g);
         }
-        if (game.getState() == 2) {
+        else if (game.getState() == 2) {
             paintEndScreen(g);
         }
 
     }
 
+    // Paint background method to draw the green background for the game
     public void paintBackground(Graphics g) {
         g.drawImage(background, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, this);
     }
