@@ -129,6 +129,7 @@ public class Board {
     // that there are no cards to move
     public ArrayList<Card> findCard(String isExtraCard, int col, int row, String categoryWhere, int where) {
         ArrayList<Card> cardsToMove = new ArrayList<Card>();
+        // If the card is the extra card, call isValidMove on the extra card to make sure the move is valid
         if(isExtraCard.equals("y")){
             if (!extraCards.isEmpty()) {
                 if (isValidMove(extraCards.get(0), categoryWhere, where)) {
@@ -136,6 +137,9 @@ public class Board {
                 }
             }
         }
+
+        // If the card was not the extra card, find the card using row and col info, check if it is a valid move, and if
+        // so, gather all the necessary cards that need to be moved
         else{
             Card toMove = mainBoard.get(col).get(row);
             if(isValidMove(toMove, categoryWhere, where)){
@@ -217,6 +221,7 @@ public class Board {
         extraCards.add(extraCards.remove(0));
     }
 
+    // Getters for the mainBoard, the final card columns, and the extraCards for the frontend to use
     public ArrayList<ArrayList<Card>> getMainBoard() {
         return mainBoard;
     }

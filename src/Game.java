@@ -10,7 +10,9 @@ public class Game {
     Board board;
     // Declare a scanner instance variable to get the name of the player
     Scanner input;
+    // Declare a GameView instance variable so that we can have a frontend
     private GameView window;
+    // Declare state integer to manage game states
     private int state;
 
 
@@ -18,13 +20,15 @@ public class Game {
     public Game() {
         // Initialize all instance variables, calling necessary constructors and getting necessary input from the
         // user
+        // Initialize the frontend by calling the frontend constructor and passing in this backend
         window = new GameView(this);
         input = new Scanner(System.in);
+        // Set the state to -1, the "pregame," and repaint to show the appropriate information
         state = -1;
+        window.repaint();
         String[] suits = {"spades", "hearts", "diamonds", "clubs"};
         String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q","K"};
         int[] values = {1, 2, 3, 4, 5 ,6, 7, 8, 9, 10, 11, 12, 13};
-        window.repaint();
         System.out.println("What is your name?");
         String name = input.nextLine();
         player = new Player(name);
@@ -32,10 +36,14 @@ public class Game {
         board = new Board(deck);
         // Print out the instructions for the game
         printInstructions();
+        // Change the state variable to repaint the window to show the instructions now that the user's name has been
+        // acquired
         state = 0;
         window.repaint();
         System.out.println("Press any key to continue");
-        name = input.nextLine();
+        name = input.nextLine(); //<--QUESTION FOR MS. NAMASIVAYAM HERE DO NOT IGNORE!!!!!!!!!!!!!!
+        // Set the state to 1, indicating that we are in the active game state and repaint to show the appropiate game
+        // setup
         state = 1;
         window.repaint();
     }
@@ -55,8 +63,10 @@ public class Game {
             // Call the play move function and check whether the game has been won after that move
             playMove(str);
             board.printBoard();
+            // Repaint to show the appropriate moves after they have been conducted
             window.repaint();
             if(board.checkWin()) {
+                // Set state to 2 to indicate we have reached the postgame
                 state = 2;
                 break;
             }
@@ -72,6 +82,7 @@ public class Game {
         if (str.equals("m")) {
             System.out.println("Are you moving the extra card? (y or n)");
             String isExtraCard = input.nextLine();
+            // Initialize variables to keep track of the row and col to find the card the user wants to move
             int colMove = 0;
             int rowMove = 0;
             if(!isExtraCard.equals("y")) {
@@ -116,12 +127,12 @@ public class Game {
         game.playGame();
     }
 
-    // Get state method
-
+    // Getter for the state for frontend use
     public int getState() {
         return state;
     }
 
+    // Getter for the board for frontend use
     public Board getBoard() {
         return board;
     }
