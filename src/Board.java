@@ -142,14 +142,20 @@ public class Board {
         // If the card was not the extra card, find the card using row and col info, check if it is a valid move, and if
         // so, gather all the necessary cards that need to be moved
         else{
-            Card toMove = mainBoard.get(col).get(row);
-            if(isValidMove(toMove, categoryWhere, where)){
-                int minIndex = mainBoard.get(col).indexOf(toMove);
-                int maxIndex = mainBoard.get(col).size() - 1;
-                for (int i = maxIndex; i > minIndex - 1; i--) {
-                    cardsToMove.addFirst(mainBoard.get(col).remove(i));
+            if(!(col > 6 || col < 0)){
+                if(!(mainBoard.get(col).size() - 1 < row || row < 0)){
+                    Card toMove = mainBoard.get(col).get(row);
+                    if(isValidMove(toMove, categoryWhere, where)){
+                        int minIndex = mainBoard.get(col).indexOf(toMove);
+                        int maxIndex = mainBoard.get(col).size() - 1;
+                        for (int i = maxIndex; i > minIndex - 1; i--) {
+                            cardsToMove.addFirst(mainBoard.get(col).remove(i));
+                        }
+                    }
                 }
+
             }
+
         }
         return cardsToMove;
     }
