@@ -1,4 +1,4 @@
-// Gabriel Gil, 12/4/24
+// Gabriel Gil, 2/26/25
 
 // Import the necessary classes
 import javax.swing.*;
@@ -15,8 +15,13 @@ public class Deck {
         // Initialize the cards ArrayList
         cards = new ArrayList<Card>();
         GameView window = w;
-        // Iterate through all the ranks of cards and create new cards for each rank with proper suits and colors
+
+        // Initialize a counter variable to represent the appropriate number of card image that we need to access to
+        // initialize each card's image
         int counter = 1;
+
+        // Iterate through all the ranks of cards and create new cards for each rank with proper suits, colors, and
+        // card images
         for(int j = 0; j< ranks.length; j++) {
             for(int i = 0; i< suits.length; i++) {
                 String s = "Resources/" + counter + ".png";
@@ -46,8 +51,7 @@ public class Deck {
     // Deal function
     public Card deal() {
         // If cards remain in the deck, return a card and decrease cardsLeft accordingly
-        if (isEmpty())
-        {
+        if (isEmpty()) {
             return null;
         }
         return cards.get(--cardsLeft);
@@ -57,6 +61,7 @@ public class Deck {
     public void shuffle() {
         int j;
         Card swap;
+
         // Shuffle the deck by swapping iterating backwards through the deck and swapping the card at that index with
         // a random card in the deck
         for(int i = cards.size() - 1; i > -1; i--) {

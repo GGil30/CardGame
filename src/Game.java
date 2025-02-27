@@ -1,4 +1,4 @@
-// Gabriel Gil, 12/4/24
+// Gabriel Gil, 2/26/25
 
 // Import the necessary classes
 import java.util.Scanner;
@@ -23,6 +23,7 @@ public class Game {
         // Initialize the frontend by calling the frontend constructor and passing in this backend
         window = new GameView(this);
         input = new Scanner(System.in);
+
         // Set the state to -1, the "pregame," and repaint to show the appropriate information
         state = -1;
         window.repaint();
@@ -34,14 +35,17 @@ public class Game {
         player = new Player(name);
         deck = new Deck(ranks, suits, values, window);
         board = new Board(deck);
+
         // Print out the instructions for the game
         printInstructions();
+
         // Change the state variable to repaint the window to show the instructions now that the user's name has been
         // acquired
         state = 0;
         window.repaint();
         System.out.println("Press any key to continue");
-        input.nextLine(); //<--QUESTION FOR MS. NAMASIVAYAM HERE DO NOT IGNORE!!!!!!!!!!!!!!
+        input.nextLine();
+
         // Set the state to 1, indicating that we are in the active game state and repaint to show the appropiate game
         // setup
         state = 1;
@@ -60,9 +64,11 @@ public class Game {
             System.out.println("Would you like to move a card or get the next wild card? To move a card, type m. " +
                     "To get the next wildcard, type any key");
             String str = input.nextLine();
+
             // Call the play move function and check whether the game has been won after that move
             playMove(str);
             board.printBoard();
+
             // Repaint to show the appropriate moves after they have been conducted
             window.repaint();
             if(board.checkWin()) {
@@ -82,9 +88,12 @@ public class Game {
         if (str.equals("m")) {
             System.out.println("Are you moving the extra card? (y or n)");
             String isExtraCard = input.nextLine();
+
             // Initialize variables to keep track of the row and col to find the card the user wants to move
             int colMove = 0;
             int rowMove = 0;
+
+            // Prompt user for the necessary information
             if(!isExtraCard.equals("y")) {
                 System.out.println("Column of card you want to move:");
                 colMove = input.nextInt() - 1;
@@ -100,6 +109,7 @@ public class Game {
                     "column, type the number associated with the column");
             int where = input.nextInt();
             input.nextLine();
+
             // Call the do move function, which passes in parameters which include the details of the move
             // If the move is not valid, inform the user with a message
             if(!board.doMove(isExtraCard, colMove,rowMove, categoryWhere, where)) {

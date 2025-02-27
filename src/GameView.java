@@ -1,3 +1,6 @@
+// Gabriel Gil, 2/26/25
+
+// Import the necessary classes
 import java.awt.*;
 import javax.swing.*;
 
@@ -28,8 +31,8 @@ public class GameView extends JFrame {
     private final Font SMALLEST_FONT = new Font("serif", Font.PLAIN, 15);
     public static final int WINDOW_WIDTH = 1425;
     public static final int WINDOW_HEIGHT = 1000;
-
-
+    public static final int FINAL_COL_RECT_X_START = 80;
+    public static final int FINAL_COL_RECT_Y_START = 50;
     // Declare game instance variable to be able to store a backend
     Game game;
 
@@ -37,6 +40,7 @@ public class GameView extends JFrame {
     public GameView(Game game) {
         // Store the backend in the game instance variable
         this.game = game;
+
         // Initialize the necessary images
         this.background = new ImageIcon("Resources/background.jpg").getImage();
         this.heart = new ImageIcon("Resources/heart.png").getImage();
@@ -44,7 +48,6 @@ public class GameView extends JFrame {
         this.diamond = new ImageIcon("Resources/diamond.png").getImage();
         this.club = new ImageIcon("Resources/club.png").getImage();
         this.backImage = new ImageIcon("Resources/back.png").getImage();
-
 
         // Setup the window with the proper title, default close operation, its size, and setVisible to true
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -58,6 +61,7 @@ public class GameView extends JFrame {
         // Draw the window and call the paint background method
         g.drawRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
         paintBackground(g);
+
         // If the state is -1, meaning the pregame, then draw the appropriate text directing the user to the console
         if(game.getState() == -1){
             g.setColor(Color.white);
@@ -76,7 +80,6 @@ public class GameView extends JFrame {
         else if (game.getState() == 2) {
             paintEndScreen(g);
         }
-
     }
 
     // Paint background method to draw the green background for the game
@@ -96,6 +99,7 @@ public class GameView extends JFrame {
                 "you've ", X_START, Y_START +20);
         String s = "unfortunately lost and will need to restart the game yourself. Good luck, " + game.player.getName() + "!";
         g.drawString(s, X_START, Y_START +40);
+
         // Tell the user to type any key to start the active game phase
         g.drawString("Press any key to continue.", X_START, Y_START +60);
 
@@ -107,13 +111,14 @@ public class GameView extends JFrame {
         g.setColor(Color.black);
         for (int i = 0; i < 4; i++) {
             if (i < 2) {
-                g.drawRect(25 + i * CARD_MARGIN, FINAL_COL_Y, Card.CARDWIDTH, Card.CARDHEIGHT);
+                g.drawRect(EXTRA_CARD_X + i * CARD_MARGIN, FINAL_COL_Y, Card.CARDWIDTH, Card.CARDHEIGHT);
             }
             g.drawRect(WINDOW_WIDTH - CARD_MARGIN - i * CARD_MARGIN, FINAL_COL_Y, Card.CARDWIDTH, Card.CARDHEIGHT);
             g.setColor(Color.white);
+
             // Draw the number labels for the columns of the final cards
             g.setFont(SMALLER_FONT);
-            g.drawString(Integer.toString(4 - i), WINDOW_WIDTH - 80 - i * CARD_MARGIN, 50);
+            g.drawString(Integer.toString(4 - i), WINDOW_WIDTH - FINAL_COL_RECT_X_START - i * CARD_MARGIN, FINAL_COL_RECT_Y_START);
             g.setColor(Color.black);
         }
         // Draw the suit symbols in the appropriate rectangles to represent the final columns
@@ -133,6 +138,7 @@ public class GameView extends JFrame {
             int x = MAIN_BOARD_CARD_X_START + i * MAIN_BOARD_COL_MARGIN;
             for (int j = 0; j < game.getBoard().getMainBoard().get(i).size(); j++) {
                 int y = MAIN_BOARD_CARD_Y_START + j * MAIN_BOARD_CARD_Y_MARGIN;
+
                 // Call the card's draw method
                 game.getBoard().getMainBoard().get(i).get(j).draw(g, x, y);
             }
@@ -141,15 +147,20 @@ public class GameView extends JFrame {
         // Draw Text Indicator to go the terminal
         g.drawString("Please refer to the console", WINDOW_WIDTH/2 - (CARD_MARGIN +25), FINAL_COL_Y + Card.CARDHEIGHT/2);
 
-        // Draw extra cards, assuming there are any <-- FIX THIS! DO NOT IGNORE
-        game.getBoard().getExtraCards().get(1).draw(g, EXTRA_CARD_X, FINAL_COL_Y);
-        game.getBoard().getExtraCards().get(0).draw(g, EXTRA_CARD_X + CARD_MARGIN, FINAL_COL_Y);
-
+        // Draw the extra card assuming there is an extra card remaining, and draw a card face down to indicate the
+        // pile of remaining extra cards assuming there is more than one left
+        if(game.getBoard().getExtraCards().size() > 0) {
+            game.getBoard().getExtraCards().get(0).draw(g, EXTRA_CARD_X + CARD_MARGIN, FINAL_COL_Y);
+            if(game.getBoard().getExtraCards().size() > 1) {
+                game.getBoard().getExtraCards().get(1).draw(g, EXTRA_CARD_X, FINAL_COL_Y);
+            }
+        }
         // Draw final cards assuming their arraylists are not empty and pass in the appropriate x and y positions
         for (int i = 0; i < 4; i++) {
             if (game.getBoard().getCardCols().get(3 - i).size() > 0) {
                 int cardToGet = game.getBoard().getCardCols().get(3 - i).size() - 1;
-                game.getBoard().getCardCols().get(3 - i).get(cardToGet).draw(g, WINDOW_WIDTH - 125 - i * 125, 60);
+                game.getBoard().getCardCols().get(3 - i).get(cardToGet).draw(g, WINDOW_WIDTH - CARD_MARGIN -
+                        i * CARD_MARGIN, FINAL_COL_Y);
             }
 
         }
@@ -160,7 +171,7 @@ public class GameView extends JFrame {
         g.setColor(Color.white);
         g.setFont(BIG_FONT);
         String s = "Congratulations " + game.player.getName() + ", you won!";
-        g.drawString(s, 100, 100);
+        g.drawString(s, X_START, Y_START);
     }
 
 

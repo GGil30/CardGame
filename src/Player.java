@@ -1,4 +1,4 @@
-// Gabriel Gil, 12/4/24
+// Gabriel Gil, 2/26/25
 
 // Import the necessary classes
 import java.util.ArrayList;
@@ -21,7 +21,8 @@ public class Player {
         points = 0;
         hand = new ArrayList<Card>();
         for (Card card : handIn) {
-            hand.add(new Card(card.getRank(), card.getSuit(), card.getValue(), card.getColor(), card.getCardImage(), card.getWindow()));
+            hand.add(new Card(card.getRank(), card.getSuit(), card.getValue(), card.getColor(), card.getCardImage(),
+                    card.getWindow()));
         }
     }
 

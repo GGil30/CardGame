@@ -1,4 +1,4 @@
-// Gabriel Gil, 12/4/24
+// Gabriel Gil, 2/26/25
 
 // Import the necessary classes
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ public class Board {
         extraCards = new ArrayList<Card>();
         cardCols = new ArrayList<ArrayList<Card>>();
         mainBoard = new ArrayList<ArrayList<Card>>();
+
         // Initialize seven arrayLists for the seven columns on the main board, and four for the four final columns
         for (int i = 0; i < 7; i++) {
             mainBoard.add(new ArrayList<Card>());
@@ -24,6 +25,7 @@ public class Board {
                 cardCols.add(new ArrayList<Card>());
             }
         }
+
         // Add cards to the main board by dealing them from the deck. All leftover cards will go the extra cards
         // ArrayList
         for (int i = 0; i < 7; i++) {
@@ -137,7 +139,6 @@ public class Board {
                 }
             }
         }
-
         // If the card was not the extra card, find the card using row and col info, check if it is a valid move, and if
         // so, gather all the necessary cards that need to be moved
         else{
@@ -192,7 +193,6 @@ public class Board {
                         return false;
                     }
                 }
-
                 // Only allow kings to be moved to empty spaces
                 else return card.getValue() == 13;
             }
@@ -218,6 +218,7 @@ public class Board {
 
     // Shift wild card function: putting a new card at the front of the array list so a new wild card shows
     public void shiftWildCard() {
+        extraCards.get(0).setHidden(true);
         extraCards.add(extraCards.remove(0));
     }
 
